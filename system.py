@@ -109,7 +109,10 @@ class System:
     def start(self):
         while True:
             if self.active_tasks < self.max_concurrent_tasks:
-                tasks = self.read_queue()
+                try:
+                    tasks = self.read_queue()
+                except Exception as e:
+                    continue
                 task_to_execute = next((task for task in tasks if task['execution'] and task['status'] == ''), None)
                 if task_to_execute:
                     task_id = task_to_execute['task_id']
@@ -124,13 +127,13 @@ class System:
 
 
 if __name__ == "__main__":
-    name="test"
+    name="queue"
     total_gpus = len(GPUtil.getGPUs())
     system = System(queue_file=f"./{name}.csv", 
                     log_file=f"./log/{name}.log", 
                     main_dir="/mnt/vepfs/fs_users/yongqi",
                     max_concurrent_tasks=8, 
-                    interval=5, 
+                    interval=30, 
                     total_gpus=total_gpus)
     system.start()
     

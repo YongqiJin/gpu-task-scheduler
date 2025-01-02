@@ -19,7 +19,6 @@ class Execution:
             cwd = os.path.join(self.main_dir, self.work_dir)
             command = f"source ~/.bashrc && {self.command}"
             result = subprocess.run(command, shell=True, check=True, text=True, capture_output=True, cwd=cwd)
-            print(result.stdout)
             return result
         except subprocess.CalledProcessError as e:
             return e

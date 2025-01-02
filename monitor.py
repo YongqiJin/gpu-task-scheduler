@@ -34,7 +34,8 @@ def read_queue(queue_file):
         next(reader, None)  # 跳过表头
         for row in reader:
             if row:  # 忽略空行
-                task_id, task_name, command, work_dir, n_gpus, execution, notify, status, start_time, end_time = row
+                task_id, task_name, command, work_dir, n_gpus, execution, notify, status, allocated_gpus, start_time, end_time = row
+                task_id, task_name, command, work_dir, n_gpus, execution, notify, status, allocated_gpus, start_time, end_time = row
                 tasks.append({
                     'task_id': task_id,
                     'task_name': task_name,
@@ -44,6 +45,7 @@ def read_queue(queue_file):
                     'execution': execution,
                     'notify': notify,
                     'status': status,
+                    'allocated_gpus': allocated_gpus,
                     'start_time': start_time,
                     'end_time': end_time,
                 })

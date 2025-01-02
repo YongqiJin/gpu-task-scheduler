@@ -44,8 +44,10 @@
     <script>
         function updateTime() {
             const now = new Date();
-            document.getElementById('current-time').innerText = now.toLocaleTimeString();
-        }
+            const date = now.toLocaleDateString();  // 获取年月日
+            const time = now.toLocaleTimeString();  // 获取时间
+            document.getElementById('current-time').innerText = `${date} ${time}`;
+        }        
 
         function updateContent() {
             fetch('/update_data')  // 假设你的后端路由是 /update_data
@@ -58,12 +60,14 @@
                         const row = document.createElement('tr');
                         row.innerHTML = `
                             <td>${task.task_id}</td>
+                            <td>${task.task_name}</td>
                             <td>${task.command}</td>
                             <td>${task.work_dir}</td>
                             <td>${task.n_gpus}</td>
                             <td>${task.execution}</td>
                             <td>${task.notify}</td>
                             <td class="${task.status == 'Succeed' ? 'green' : task.status == 'Failed' ? 'red' : task.status == 'Running' ? 'yellow' : 'black'}">${task.status}</td>
+                            <td>${task.allocated_gpus}</td>
                             <td>${task.start_time}</td>
                             <td>${task.end_time}</td>
                         `;
@@ -106,12 +110,14 @@
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Name</th>
                         <th>Command</th>
-                        <th>Working Directory</th>
+                        <th>Work Dir</th>
                         <th>Num GPUs</th>
                         <th>Execution</th>
                         <th>Notify</th>
                         <th>Status</th>
+                        <th>Allocated GPUs</th>
                         <th>Start Time</th>
                         <th>End Time</th>
                     </tr>

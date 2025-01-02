@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Queue and GPU Status</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        .table th, .table td {
+            text-align: center;
+        }
+        .card {
+            margin-top: 20px;
+        }
+
+        /* Coloring */
+        .green {
+            color: #28a745; /* Green */
+        }
+        .red {
+            color: #dc3545; /* Red */
+        }
+        .yellow {
+            color: #ffc107; /* Yellow */
+        }
+        .black {
+            color: black;
+        }
+
+        /* Time styling */
+        #current-time {
+            font-size: 24px; /* 增大时间的字号 */
+        }
+
+    </style>
+    <script>
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('current-time').innerText = now.toLocaleTimeString();
+        }
+
+        function updateContent() {
+            fetch('/update_data')  // 假设你的后端路由是 /update_data
+                .then(response => response.json())
+                .then(data => {
+                    // 更新任务队列
+                    const taskTableBody = document.querySelector('.task-table tbody');
+                    taskTableBody.innerHTML = '';
+                    data.tasks.forEach(task => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${task.task_id}</td>
+                            <td>${task.command}</td>
+                            <td>${task.work_dir}</td>
+                            <td>${task.n_gpus}</td>
+                            <td>${task.execution}</td>
+                            <td>${task.notify}</td>
+                            <td class="${task.status == 'Succeed' ? 'green' : task.status == 'Failed' ? 'red' : task.status == 'Running' ? 'yellow' : 'black'}">${task.status}</td>
+                            <td>${task.start_time}</td>
+                            <td>${task.end_time}</td>
+                        `;
+                        taskTableBody.appendChild(row);
+                    });
+
+                    // 更新GPU状态
+                    const gpuTableBody = document.querySelector('.gpu-table tbody');
+                    gpuTableBody.innerHTML = '';
+                    data.gpu_status.forEach(gpu => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${gpu.id}</td>
+                            <td class="${gpu['gpu_utilization(%)'] < 20 ? 'green' : gpu['gpu_utilization(%)'] <= 50 ? 'yellow' : 'red'}">${gpu['gpu_utilization(%)']}</td>
+                            <td class="${gpu['memory_used(MB)'] / gpu['memory_total(MB)'] < 0.2 ? 'green' : gpu['memory_used(MB)'] / gpu['memory_total(MB)'] < 0.5 ? 'yellow' : 'red'}">${gpu['memory_used(MB)']}</td>
+                            <td>${gpu['memory_total(MB)']}</td>
+                            <td class="${gpu.is_running ? 'red' : 'green'}">${gpu.is_running ? 'Yes' : 'No'}</td>
+                        `;
+                        gpuTableBody.appendChild(row);
+                    });
+                });
+        }
+
+        setInterval(updateTime, 1000);
+        setInterval(updateContent, 5000);
+    </script>
+</head>
+<body onload="updateTime(); updateContent();">
+
+<div class="container">
+    <p class="text-center" id="current-time"></p>
+
+    <!-- Task Queue Table -->
+    <div class="card">
+        <div class="card-header">
+            <h4>Current Tasks</h4>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered task-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Command</th>
+                        <th>Working Directory</th>
+                        <th>Num GPUs</th>
+                        <th>Execution</th>
+                        <th>Notify</th>
+                        <th>Status</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 动态内容将插入这里 -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- GPU Status Section -->
+    <div class="card">
+        <div class="card-header">
+            <h4>GPU Status</h4>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered gpu-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>GPU Utilization (%)</th>
+                        <th>Memory Used (MB)</th>
+                        <th>Total Memory (MB)</th>
+                        <th>Is Running</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 动态内容将插入这里 -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS, Popper.js -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

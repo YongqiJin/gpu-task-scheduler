@@ -82,7 +82,8 @@
                         row.innerHTML = `
                             <td>${gpu.id}</td>
                             <td class="${gpu['gpu_utilization(%)'] < 20 ? 'green' : gpu['gpu_utilization(%)'] <= 50 ? 'yellow' : 'red'}">${gpu['gpu_utilization(%)']}</td>
-                            <td class="${gpu['memory_used(MB)'] / gpu['memory_total(MB)'] < 0.2 ? 'green' : gpu['memory_used(MB)'] / gpu['memory_total(MB)'] < 0.5 ? 'yellow' : 'red'}">${gpu['memory_used(MB)']}</td>
+                            <td class="${gpu['memory_utilization(%)'] < 0.2 ? 'green' : gpu['memory_utilization(%)'] < 0.5 ? 'yellow' : 'red'}">${gpu['memory_utilization(%)']}</td>
+                            <td class="${gpu['memory_utilization(%)'] < 0.2 ? 'green' : gpu['memory_utilization(%)'] < 0.5 ? 'yellow' : 'red'}">${gpu['memory_used(MB)']}</td>
                             <td>${gpu['memory_total(MB)']}</td>
                             <td class="${gpu.is_running ? 'red' : 'green'}">${gpu.is_running ? 'Yes' : 'No'}</td>
                         `;
@@ -140,6 +141,7 @@
                     <tr>
                         <th>ID</th>
                         <th>GPU Utilization (%)</th>
+                        <th>Memory (%)</th>
                         <th>Memory Used (MB)</th>
                         <th>Total Memory (MB)</th>
                         <th>Is Running</th>

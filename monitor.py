@@ -12,13 +12,14 @@ def get_gpu_status(memory_threshold=50, utilization_threshold=20):
     result = subprocess.run(['nvidia-smi', '--query-gpu=index,name,utilization.gpu,memory.used,memory.total', '--format=csv,noheader,nounits'],
                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     gpu_status = result.stdout.decode('utf-8').strip().split('\n')
-    gpu_info = pd.DataFrame(columns=['id', 'gpu_utilization(%)', 'memory_used(MB)', 'memory_total(MB)', 'is_running'])
+    gpu_info = pd.DataFrame(columns=['id', 'gpu_utilization(%)', 'memory_utilization(%)', 'memory_used(MB)', 'memory_total(MB)', 'is_running'])
 
     for i, gpu in enumerate(gpu_status):
         info = gpu.split(', ')
         gpu_info.loc[i] = {
             'id': int(info[0]),
             'gpu_utilization(%)': int(info[2]),
+            'memory_utilization(%)': round(float(info[3]) / float(info[4]) * 100, 1),
             'memory_used(MB)': int(info[3]),
             'memory_total(MB)': int(info[4]),
             'is_running': int(info[2]) > utilization_threshold or int(info[3]) / int(info[4]) > memory_threshold

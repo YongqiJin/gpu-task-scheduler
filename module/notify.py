@@ -4,7 +4,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 class Notification:
-    def __init__(self, sender_email=None, sender_password=None, smtp_server=None, smtp_port=587, recipient_email=None):
+    def __init__(self, sender_email=None, sender_password=None, smtp_server=None, smtp_port=None, recipient_email=None):
         self.sender_email = os.getenv('SENDER_EMAIL') if sender_email is None else sender_email
         self.sender_password = os.getenv('SENDER_PASSWORD') if sender_password is None else sender_password
         self.smtp_server = os.getenv('SMTP_SERVER') if smtp_server is None else smtp_server

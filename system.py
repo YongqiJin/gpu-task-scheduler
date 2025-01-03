@@ -11,6 +11,7 @@ import pytz
 from module.gpu_manager import GPUManager
 from module.execution import Execution
 from module.log import init_logging
+from module.notify import Notification
 
     
 class System:
@@ -25,6 +26,7 @@ class System:
         self.lock = threading.Lock()
         self.total_gpus = len(GPUtil.getGPUs()) if total_gpus is None else total_gpus
         self.gpu_manager = GPUManager(total_gpus=total_gpus)
+        self.Notify = Notification()
         init_logging(log_file)
         
     def read_queue(self):
@@ -84,12 +86,18 @@ class System:
             self.update_task_status(task_id, "Succeed", end_time=end_time)  # 更新任务状态为Succeed
             logging.info(f"Completed successfully.", extra={'task_id': task_id})
             if notify:
-                pass  # 发送通知 [TODO]
+                try:
+                    self.Notify.send_email(f"Task {task_id} Completed", f"Task {task_id} has completed successfully.")
+                except:
+                    pass
         else:
             self.update_task_status(task_id, "Failed", end_time=end_time)  # 更新任务状态为Failed
             logging.error(f"Failed. Error:\n{result.stderr}", extra={'task_id': task_id})
             if notify:
-                pass  # 发送通知 [TODO]
+                try:
+                    self.Notify.send_email(f"Task {task_id} Failed", f"Task {task_id} has failed. Error:\n{result.stderr}")
+                except:
+                    pass
         with self.lock:
             self.active_tasks -= 1
         self.gpu_manager.release_gpus(allocated_gpus)

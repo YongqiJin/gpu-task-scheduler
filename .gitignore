@@ -1,3 +1,6 @@
 quene.csv
 __pycache__/
 .*/
+
+*.csv
+log/

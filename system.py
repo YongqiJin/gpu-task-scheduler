@@ -4,9 +4,9 @@ import time
 from datetime import datetime
 import GPUtil
 import logging
-from filelock import FileLock
 import subprocess
 import pytz
+import argparse
 
 from module.gpu_manager import GPUManager
 from module.execution import Execution
@@ -135,13 +135,24 @@ class System:
 
 
 if __name__ == "__main__":
-    name="queue"
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--name", "-n", type=str, default="test")
+    parser.add_argument("--main_dir", "-d", type=str, default=".")
+    parser.add_argument("--max_concurrent_tasks", "-m", type=int, default=8)
+    parser.add_argument("--interval", "-i", type=int, default=30)
+    
+    args = parser.parse_args()
+    name = args.name
+    max_concurrent_tasks = args.max_concurrent_tasks
+    interval = args.interval
+    main_dir = args.main_dir
+    
     total_gpus = len(GPUtil.getGPUs())
-    system = System(queue_file=f"./{name}.csv", 
-                    log_file=f"./log/{name}.log", 
-                    main_dir="/mnt/vepfs/fs_users/yongqi",
-                    max_concurrent_tasks=8, 
-                    interval=30, 
+    system = System(queue_file=f"./{name}.csv",
+                    log_file=f"./log/{name}.log",
+                    main_dir=main_dir,
+                    max_concurrent_tasks=max_concurrent_tasks,
+                    interval=interval,
                     total_gpus=total_gpus)
     system.start()
     

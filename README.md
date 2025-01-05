@@ -49,6 +49,6 @@ python monitor.py
 
 The system sends email notifications using the `smtplib` library. Configure the email settings via environment variables. See `module/notify.py` for details.
 
-## License
+# Contribution
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Feel free to contribute to this project by forking and creating a pull request with your changes. If you have any questions or suggestions, please open an issue for discussion.

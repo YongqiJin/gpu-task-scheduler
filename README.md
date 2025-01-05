@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This is a lightweight GPU task scheduler for a single-node multi-GPU server. 
+This is a lightweight GPU task scheduler for a single-node multi-GPU server. It supports GPU scheduling, web monitoring and email notifications.
 
 ## Functions
 

@@ -1,12 +1,16 @@
-2025-01-03 03:09:28 - INFO - Task 1 - Allocated on GPUs 0
-2025-01-03 03:09:28 - INFO - Task 1 - Start on GPUs 0
-2025-01-03 03:09:33 - INFO - Task 3 - Allocated on GPUs 1,2
-2025-01-03 03:09:33 - INFO - Task 3 - Start on GPUs 1,2
-2025-01-03 03:09:38 - INFO - Task 4 - Allocated on GPUs 3
-2025-01-03 03:09:38 - INFO - Task 4 - Start on GPUs 3
-2025-01-03 03:09:58 - INFO - Task 4 - Completed successfully.
-2025-01-03 03:09:58 - INFO - Task 4 - Released GPUs 3
-2025-01-03 03:10:08 - INFO - Task 1 - Completed successfully.
-2025-01-03 03:10:08 - INFO - Task 1 - Released GPUs 0
-2025-01-03 03:10:08 - INFO - Task 5 - Allocated on GPUs 0,3
-2025-01-03 03:10:08 - INFO - Task 5 - Start on GPUs 0,3
+2025-01-05 16:29:34 - INFO - Task 1 - Allocated on GPUs 0
+2025-01-05 16:29:34 - INFO - Task 1 - Start on GPUs 0
+2025-01-05 16:30:04 - INFO - Task 3 - Allocated on GPUs 1,2
+2025-01-05 16:30:04 - INFO - Task 3 - Start on GPUs 1,2
+2025-01-05 16:30:34 - INFO - Task 3 - Completed successfully.
+2025-01-05 16:30:34 - INFO - Task 3 - Released GPUs 1,2
+2025-01-05 16:30:34 - INFO - Task 4 - Allocated on GPUs 1
+2025-01-05 16:30:34 - INFO - Task 4 - Start on GPUs 1
+2025-01-05 16:30:36 - INFO - Task 1 - Completed successfully.
+2025-01-05 16:30:36 - INFO - Task 1 - Released GPUs 0
+2025-01-05 16:31:04 - INFO - Task 4 - Completed successfully.
+2025-01-05 16:31:04 - INFO - Task 4 - Released GPUs 1
+2025-01-05 16:31:04 - INFO - Task 5 - Allocated on GPUs 0,1
+2025-01-05 16:31:04 - INFO - Task 5 - Start on GPUs 0,1
+2025-01-05 16:31:34 - INFO - Task 5 - Completed successfully.
+2025-01-05 16:31:34 - INFO - Task 5 - Released GPUs 0,1

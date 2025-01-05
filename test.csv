@@ -1,6 +1,6 @@
 task_id,task_name,command,work_dir,n_gpus,execution,notify,status,allocated_gpus,start_time,end_time
-1,1,python test.py -d 30,./task,1,Yes,Yes,,,,
+1,1,python test.py -d 30,./task,1,Yes,Yes,Succeed,0,2025-01-05 16:29:34,2025-01-05 16:30:36
 2,2,python test.py -d 20,.task,2,No,No,,,,
-3,3,python test.py -d 20,./task,2,Yes,Yes,,,,
-4,4,python test.py -d 5,./task,1,Yes,Yes,,,,
-5,5,python test.py -d 10,./task,2,Yes,Yes,,,,
+3,3,python test.py -d 20,./task,2,Yes,Yes,Succeed,"1,2",2025-01-05 16:30:04,2025-01-05 16:30:34
+4,4,python test.py -d 5,./task,1,Yes,Yes,Succeed,1,2025-01-05 16:30:34,2025-01-05 16:31:04
+5,5,python test.py -d 10,./task,2,Yes,Yes,Succeed,"0,1",2025-01-05 16:31:04,2025-01-05 16:31:34

@@ -146,6 +146,7 @@ if __name__ == "__main__":
     max_concurrent_tasks = args.max_concurrent_tasks
     interval = args.interval
     main_dir = args.main_dir
+    main_dir = "/mnt/vepfs/fs_users/yongqi"
     
     total_gpus = len(GPUtil.getGPUs())
     system = System(queue_file=f"./{name}.csv",

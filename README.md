@@ -10,7 +10,7 @@ This is a simple automatic task scheduling system for a single-node multi-GPU se
 - **GPU Resource Allocation**: Dynamically allocates available GPUs to tasks based on their requirements and current GPU utilization.
 - **Task Execution**: Executes tasks in the queue, setting the appropriate environment variables for GPU usage.
 - **Status Monitoring**: Monitors the status of tasks and GPUs, updating the task queue and logging the execution details.
-- **Notification System**: Sends emailnotifications via email upon task completion or failure.
+- **Notification System**: Sends notifications via email upon task completion or failure.
 - **Web Interface**: Provides a web interface to view the current task queue and GPU status.
 
 ## Usage

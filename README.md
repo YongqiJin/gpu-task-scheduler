@@ -1,8 +1,8 @@
-# GPU Task System
+# GPU Task Scheduler
 
 ## Introduction
 
-This is a simple automatic task scheduling system for a single-node multi-GPU server.
+This is a lightweight GPU task scheduler for a single-node multi-GPU server. 
 
 ## Functions
 

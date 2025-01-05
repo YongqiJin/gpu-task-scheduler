@@ -136,7 +136,7 @@ class System:
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--name", "-n", type=str, default="test")
+    parser.add_argument("--name", "-n", type=str, default="example")
     parser.add_argument("--main_dir", "-d", type=str, default=".")
     parser.add_argument("--max_concurrent_tasks", "-m", type=int, default=8)
     parser.add_argument("--interval", "-i", type=int, default=30)
@@ -146,7 +146,6 @@ if __name__ == "__main__":
     max_concurrent_tasks = args.max_concurrent_tasks
     interval = args.interval
     main_dir = args.main_dir
-    main_dir = "/mnt/vepfs/fs_users/yongqi"
     
     total_gpus = len(GPUtil.getGPUs())
     system = System(queue_file=f"./{name}.csv",

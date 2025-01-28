@@ -2,6 +2,7 @@ from flask import Flask, render_template, jsonify
 import csv
 import subprocess
 import pandas as pd
+import psutil
 
 app = Flask(__name__)
 
@@ -26,6 +27,21 @@ def get_gpu_status(memory_threshold=50, utilization_threshold=20):
         }
     return gpu_info
 
+def get_cpu_status():
+    """查询 CPU 内存和利用率"""
+    cpu_utilization = psutil.cpu_percent(interval=1)
+    memory_info = psutil.virtual_memory()
+    memory_utilization = memory_info.percent
+    memory_used = memory_info.used // (1024 ** 3)  # 转换为 GB
+    memory_total = memory_info.total // (1024 ** 3)  # 转换为 GB
+
+    return {
+        'cpu_utilization(%)': cpu_utilization,
+        'memory_utilization(%)': memory_utilization,
+        'memory_used(GB)': memory_used,
+        'memory_total(GB)': memory_total
+    }
+    
 # 读取任务队列函数
 def read_queue(queue_file):
     global tasks
@@ -53,19 +69,22 @@ def read_queue(queue_file):
 
 # 路由渲染任务数据
 @app.route('/', methods=['GET'])
-def get_tasks(queue_file="./queue.csv"):
+def get_tasks(queue_file="./queue_pubchem.csv"):
     read_queue(queue_file)  # 每次请求更新任务状态
     gpu_status = get_gpu_status()  # 获取当前 GPU 状态
-    return render_template('monitor.html', tasks=tasks, gpu_status=gpu_status)
+    cpu_status = get_cpu_status()  # 获取当前 CPU 状态
+    return render_template('monitor.html', tasks=tasks, gpu_status=gpu_status, cpu_status=cpu_status)
 
 # 新增路由提供任务队列和GPU状态数据
 @app.route('/update_data', methods=['GET'])
-def update_data(queue_file="./queue.csv"):
+def update_data(queue_file="./queue_pubchem.csv"):
     read_queue(queue_file)  # 每次请求更新任务状态
     gpu_status = get_gpu_status()  # 获取当前 GPU 状态
+    cpu_status = get_cpu_status()  # 获取当前 CPU 状态
     data = {
         "tasks": tasks,
-        "gpu_status": gpu_status.to_dict(orient='records')
+        "gpu_status": gpu_status.to_dict(orient='records'),
+        "cpu_status": cpu_status
     }
     return jsonify(data)
 

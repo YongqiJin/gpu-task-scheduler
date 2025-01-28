@@ -89,6 +89,18 @@
                         `;
                         gpuTableBody.appendChild(row);
                     });
+
+                    // 更新CPU状态
+                    const cpuStatus = data.cpu_status;
+                    const cpuTableBody = document.querySelector('.cpu-table tbody');
+                    cpuTableBody.innerHTML = `
+                        <tr>
+                            <td>${cpuStatus['cpu_utilization(%)']}</td>
+                            <td>${cpuStatus['memory_utilization(%)']}</td>
+                            <td>${cpuStatus['memory_used(GB)']}</td>
+                            <td>${cpuStatus['memory_total(GB)']}</td>
+                        </tr>
+                    `;
                 });
         }
 
@@ -145,6 +157,28 @@
                         <th>Memory Used (MB)</th>
                         <th>Total Memory (MB)</th>
                         <th>Is Running</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 动态内容将插入这里 -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- CPU Status Section -->
+    <div class="card">
+        <div class="card-header">
+            <h4>CPU Status</h4>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered cpu-table">
+                <thead>
+                    <tr>
+                        <th>CPU Utilization (%)</th>
+                        <th>Memory Utilization (%)</th>
+                        <th>Memory Used (GB)</th>
+                        <th>Total Memory (GB)</th>
                     </tr>
                 </thead>
                 <tbody>
